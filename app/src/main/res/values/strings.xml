@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">VKİ Hesaplama</string>
+    <string name="app">App Logo</string>
+    <string name="find_house">İdeal Kilonuza Kavuşun</string>
+    <string name="ideal_kilo">Vücut Kitle İndeksi</string>
+    <string name="login">Giriş Yap</string>
+    <string name="login1">Kayıt Ol</string>
+    <string name="profil">Profil</string>
+    <string name="past">Geçmiş</string>
+    <string name="settings">Ayarlar</string>
+</resources>
