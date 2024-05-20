@@ -2,6 +2,7 @@ package com.enesakin.vkhesaplama
 
 import android.util.Log
 import android.view.ContextThemeWrapper
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -22,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -43,7 +42,6 @@ fun Home(preferenceHelper: PreferenceHelper) {
     var idealWeight by remember { mutableStateOf("") }
     var gender by remember { mutableStateOf("") }
     var bmi by remember { mutableStateOf<Float?>(null) }
-    val showInfoText = gender.isEmpty() || height.isEmpty() || weight.isEmpty()
 
     fun isHeightValid(height: String): Boolean {
         val heightFloat = height.toFloatOrNull()
@@ -177,13 +175,13 @@ fun Home(preferenceHelper: PreferenceHelper) {
                     )
                 }
             Spacer(modifier = Modifier.height(16.dp))
+            val context = LocalContext.current.applicationContext
             SimpleButton(
                 onClick = {
                     val isHeightValid = isHeightValid(height)
                     val isWeightValid = isWeightValid(weight)
 
                     if (gender.isEmpty() || !isHeightValid || !isWeightValid) {
-
                         val errorMessage = when {
                             height.isEmpty() && weight.isEmpty() && gender.isEmpty() -> "Boy ve kilo bilgilerinizi giriniz."
                             height.isEmpty() && weight.isEmpty() -> "Boy ve kilonuzu giriniz."
@@ -195,7 +193,7 @@ fun Home(preferenceHelper: PreferenceHelper) {
                             else -> ""
                         }
                         if (errorMessage.isNotEmpty()) {
-
+                            Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
                         }
                     } else {
                         val heightFloat = height.toFloatOrNull()
@@ -209,7 +207,7 @@ fun Home(preferenceHelper: PreferenceHelper) {
                             saveWeightToDatabase(weight)
                             saveDateTimeToDatabase()
                         } else {
-                            // Float'a dönüştürme başarısız olduğunda uyarı göster
+                            Toast.makeText(context, "Lütfen geçerli bir boy ve kilo giriniz.", Toast.LENGTH_SHORT).show()
                         }
                     }
                 },

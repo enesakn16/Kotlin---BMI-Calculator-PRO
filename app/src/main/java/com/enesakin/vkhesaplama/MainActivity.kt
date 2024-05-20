@@ -3,8 +3,10 @@ package com.enesakin.vkhesaplama
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.ContextThemeWrapper
@@ -34,6 +36,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.rounded.Menu
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -49,6 +52,7 @@ import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
@@ -197,6 +201,28 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val preferenceHelper = PreferenceHelper(context = applicationContext)
+        // AlarmManager ile bildirim ayarı
+        setupNotificationAlarm()
+
+        setContent {
+            VKİHesaplamaTheme {
+                var showDialog by remember { mutableStateOf(true) }
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    NavBotSheet(preferenceHelper)
+                }
+                if (showDialog) {
+                    RateUsDialog(
+                        onRateUs = { rateUs() },
+                        onClose = { showDialog = false }
+                    )
+                }
+            }
+        }
+    }
+    private fun setupNotificationAlarm() {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(this, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_IMMUTABLE)
@@ -207,18 +233,42 @@ class MainActivity : ComponentActivity() {
             alarmInterval,
             pendingIntent
         )
-        setContent {
-            VKİHesaplamaTheme {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                )
-                {
-                    NavBotSheet(preferenceHelper)
-                }
-            }
+    }
+    private fun rateUs() {
+        val uri = Uri.parse("market://details?id=$packageName")
+        val goToMarket = Intent(Intent.ACTION_VIEW, uri)
+        goToMarket.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY or
+                Intent.FLAG_ACTIVITY_NEW_DOCUMENT or
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+        try {
+            startActivity(goToMarket)
+        } catch (e: ActivityNotFoundException) {
+            startActivity(Intent(Intent.ACTION_VIEW,
+                Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
         }
     }
+    companion object {
+        private const val PERMISSION_REQUEST_CODE = 1001
+    }
+}
+
+@Composable
+fun RateUsDialog(onRateUs: () -> Unit, onClose: () -> Unit) {
+    AlertDialog(
+        onDismissRequest = onClose,
+        title = { Text(text = "Rate Us") },
+        text = { Text("Please rate us on Google Play! ❤\uFE0F") },
+        confirmButton = {
+            TextButton(onClick = onRateUs) {
+                Text("Rate Us")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onClose) {
+                Text("Close")
+            }
+        }
+    )
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -244,7 +294,6 @@ fun NavBotSheet(preferenceHelper: PreferenceHelper) {
         drawerContent = {
             ModalDrawerSheet {
                 val myColor = Color(0xFF32357A)
-                val myColor1 = Color(0xFF000080)
                 Box(
                     modifier = Modifier
                         .background(color = myColor)
@@ -626,8 +675,7 @@ fun GenderButton(
     iconId: Int,
     onGenderSelected: () -> Unit
 ) {
-    val iconId =
-        if (gender == "Kadın") R.drawable.kadin1 else R.drawable.adam1 // GenderButton için hangi ikonun kullanılacağını belirleme
+    if (gender == "Kadın") R.drawable.kadin1 else R.drawable.adam1
     val textColor = if (isSelected) Color.White else Color.Black
     val backgroundColor = if (isSelected && gender == "Kadın") {
         Color(0xFFF04DA1)
@@ -670,8 +718,6 @@ fun GenderButton(
 }
 
 fun calculateProgress(bmi: Float): Float {
-    // VKİ'ye göre bir ilerleme oranı hesapla
-    // Örnek bir hesaplama: VKİ 18.5 ise 0.2, VKİ 24.9 ise 0.5, VKİ 29.9 ise 0.8 gibi
     return when {
         bmi < 18.5 -> 0.2f
         bmi < 24.9 -> 0.5f
