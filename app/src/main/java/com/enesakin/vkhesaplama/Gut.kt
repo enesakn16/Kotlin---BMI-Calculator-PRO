@@ -32,7 +32,7 @@ fun Gut(navController: NavController) {
     Surface(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize()) {
             Image(
-                painter = painterResource(id = R.drawable.gut),
+                painter = painterResource(id = R.drawable.hdgut),
                 contentDescription = "Background Image",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier

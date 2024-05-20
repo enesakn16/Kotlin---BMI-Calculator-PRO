@@ -33,7 +33,7 @@ fun Kardiyo(navController: NavController) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Image'ın %25'ini kaplaması için weight kullanın
             Image(
-                painter = painterResource(id = R.drawable.kardiyovaskuler),
+                painter = painterResource(id = R.drawable.hdkardiyo),
                 contentDescription = "Background Image",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier

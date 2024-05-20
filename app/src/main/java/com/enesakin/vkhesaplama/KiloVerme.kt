@@ -33,7 +33,7 @@ fun KiloVerme(navController: NavController) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Image'ın %25'ini kaplaması için weight kullanın
             Image(
-                painter = painterResource(id = R.drawable.zayiflama),
+                painter = painterResource(id = R.drawable.hdkiloverme),
                 contentDescription = "Background Image",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier

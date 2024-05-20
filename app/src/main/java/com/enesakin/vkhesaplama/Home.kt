@@ -147,17 +147,7 @@ fun Home(preferenceHelper: PreferenceHelper) {
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Surface(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(100.dp)
-                    .padding(top = 20.dp, bottom = 10.dp, start = 5.dp, end = 5.dp)
-                    .shadow(
-                        elevation = 3.dp,
-                        shape = RoundedCornerShape(13.dp),
-                        clip = true
-                    )
-            ) {
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -172,6 +162,7 @@ fun Home(preferenceHelper: PreferenceHelper) {
                             .weight(1f)
                             .padding(5.dp)
                             .fillMaxWidth()
+                            .height(75.dp)
                     )
                     GenderButton(
                         gender = "Erkek",
@@ -182,9 +173,9 @@ fun Home(preferenceHelper: PreferenceHelper) {
                             .weight(1f)
                             .padding(5.dp)
                             .fillMaxWidth()
+                            .height(75.dp)
                     )
                 }
-            }
             Spacer(modifier = Modifier.height(16.dp))
             SimpleButton(
                 onClick = {

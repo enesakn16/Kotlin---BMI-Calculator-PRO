@@ -7,9 +7,9 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@drawable/yeni"
+        android:icon="@drawable/profilresmi"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/yeni"
+        android:roundIcon="@drawable/profilresmi"
         android:supportsRtl="true"
         android:theme="@style/Theme.VKİHesaplama"
         tools:targetApi="31">

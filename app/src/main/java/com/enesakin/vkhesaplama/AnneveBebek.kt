@@ -33,7 +33,7 @@ fun AnneveBebek(navController: NavController) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Image'ın %25'ini kaplaması için weight kullanın
             Image(
-                painter = painterResource(id = R.drawable.annevebebek),
+                painter = painterResource(id = R.drawable.hdannevebebek),
                 contentDescription = "Background Image",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier

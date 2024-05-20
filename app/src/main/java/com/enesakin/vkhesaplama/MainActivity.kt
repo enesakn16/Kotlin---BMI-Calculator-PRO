@@ -30,29 +30,24 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MailOutline
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -82,7 +77,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -213,7 +207,6 @@ class MainActivity : ComponentActivity() {
             alarmInterval,
             pendingIntent
         )
-        installSplashScreen()
         setContent {
             VKİHesaplamaTheme {
                 Box(
@@ -641,7 +634,11 @@ fun GenderButton(
     } else if (isSelected && gender == "Erkek") {
         Color(0xFF007BA7)
     } else Color(0xFFF5F5F5)
-
+    val iconColor = if (isSelected && gender == "Kadın"){
+        Color(0xFFF5F5F5)
+    } else if (isSelected && gender == "Erkek"){
+        Color(0xFFF5F5F5)
+    } else Color.Black
     Button(
         onClick = { onGenderSelected() },
         modifier = modifier
@@ -660,13 +657,13 @@ fun GenderButton(
             Icon(
                 painter = painterResource(id = iconId),
                 contentDescription = gender,
-                tint = Color.Black, // İkon rengini beyaza ayarla
+                tint = iconColor, // İkon rengini beyaza ayarla
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(8.dp)) // İkon ile metin arasında bir boşluk bırak
             Text(
                 text = gender,
-                color = Color.Black // Buton içindeki yazı rengini beyaza ayarla
+                color = textColor // Buton içindeki yazı rengini beyaza ayarla
             )
         }
     }

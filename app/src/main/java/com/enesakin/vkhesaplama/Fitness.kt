@@ -33,7 +33,7 @@ fun FitnessPage(navController: NavController) {
         Column(modifier = Modifier.fillMaxSize()) {
             // Image'ın %25'ini kaplaması için weight kullanın
             Image(
-                painter = painterResource(id = R.drawable.fitness2),
+                painter = painterResource(id = R.drawable.hdfitness),
                 contentDescription = "Background Image",
                 contentScale = ContentScale.FillBounds,
                 modifier = Modifier

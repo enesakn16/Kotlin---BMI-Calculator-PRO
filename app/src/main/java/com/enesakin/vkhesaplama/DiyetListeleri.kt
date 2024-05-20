@@ -63,35 +63,21 @@ fun DiyetListeleri(preferenceHelper: PreferenceHelper, navController: NavControl
                 item { anneveBebekBox1(navController) }
             }
             val myColor = Color(0xFF32357A)
-            HorizontalDivider(modifier = Modifier.padding(bottom = 10.dp))
-            Text(
-                text = "Diyet Listeleri ",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 15.dp, top = 15.dp)
 
-            )
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 120.dp)
 
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 100.dp)
-                    .background(
-                        color = myColor.copy(0.6f),
-                        shape = RoundedCornerShape(topEndPercent = 3, topStartPercent = 3)
-                    )
-            ) {
-                item { FitnessBox(navController) }
-                item { KiloAlmaBox(navController) }
-                item { KiloVermeBox(navController) }
-                item { GutBox(navController) }
-                item { AnneveBebekBox(navController) }
-                item { MetaBox(navController) }
-                item { KardiyoBox(navController) }
-            }
+                ) {
+                    item { FitnessBox(navController) }
+                    item { KiloAlmaBox(navController) }
+                    item { KiloVermeBox(navController) }
+                    item { GutBox(navController) }
+                    item { AnneveBebekBox(navController) }
+                    item { MetaBox(navController) }
+                    item { KardiyoBox(navController) }
+                }
         }
     }
 }
@@ -99,7 +85,7 @@ fun DiyetListeleri(preferenceHelper: PreferenceHelper, navController: NavControl
 @Composable
 fun fitnessBox1(navController: NavController) {
     BoxWithImageAndTextRow(
-        imageResId = R.drawable.fitness,
+        imageResId = R.drawable.hdfitness,
         text = "Fitness",
         onClick = { navController.navigate("fitness") }
     )
@@ -108,7 +94,7 @@ fun fitnessBox1(navController: NavController) {
 @Composable
 fun kiloAlmaBox1(navController: NavController) {
     BoxWithImageAndTextRow(
-        imageResId = R.drawable.kiloalma,
+        imageResId = R.drawable.hdkiloalma,
         text = "Kilo Alma",
         onClick = { navController.navigate("kiloalma") }
     )
@@ -117,7 +103,7 @@ fun kiloAlmaBox1(navController: NavController) {
 @Composable
 fun kiloVermeBox1(navController: NavController) {
     BoxWithImageAndTextRow(
-        imageResId = R.drawable.zayiflama,
+        imageResId = R.drawable.hdkiloverme,
         text = "Kilo Verme",
         onClick = { navController.navigate("kiloverme") }
     )
@@ -126,7 +112,7 @@ fun kiloVermeBox1(navController: NavController) {
 @Composable
 fun gutBox1(navController: NavController) {
     BoxWithImageAndTextRow(
-        imageResId = R.drawable.gut,
+        imageResId = R.drawable.hdgut,
         text = "GutBox",
         onClick = { navController.navigate("gut") }
     )
@@ -135,7 +121,7 @@ fun gutBox1(navController: NavController) {
 @Composable
 fun anneveBebekBox1(navController: NavController) {
     BoxWithImageAndTextRow(
-        imageResId = R.drawable.annevebebek,
+        imageResId = R.drawable.hdannevebebek,
         text = "Anne ve Bebek Sağlığı",
         onClick = { navController.navigate("annevebebek") }
     )
@@ -144,7 +130,7 @@ fun anneveBebekBox1(navController: NavController) {
 @Composable
 fun metaBox1(navController: NavController) {
     BoxWithImageAndTextRow(
-        imageResId = R.drawable.metabolik,
+        imageResId = R.drawable.hdmeta,
         text = "Metabolik Sendrom",
         onClick = { navController.navigate("meta") }
     )
@@ -153,7 +139,7 @@ fun metaBox1(navController: NavController) {
 @Composable
 fun kardiyoBox1(navController: NavController) {
     BoxWithImageAndTextRow(
-        imageResId = R.drawable.kardiyovaskuler,
+        imageResId = R.drawable.hdkardiyo,
         text = "Kardiyovasküler",
         onClick = { navController.navigate("kardiyo") }
     )
@@ -199,7 +185,7 @@ fun BoxWithImageAndTextRow(imageResId: Int, text: String, onClick: () -> Unit) {
 @Composable
 fun FitnessBox(navController: NavController) {
     BoxWithImageAndText(
-        imageResId = R.drawable.fitness,
+        imageResId = R.drawable.hdfitness,
         text = "Fitness",
         onClick = { navController.navigate("fitness") }
     )
@@ -208,7 +194,7 @@ fun FitnessBox(navController: NavController) {
 @Composable
 fun KiloAlmaBox(navController: NavController) {
     BoxWithImageAndText(
-        imageResId = R.drawable.kiloalma,
+        imageResId = R.drawable.hdkiloalma,
         text = "Kilo Alma",
         onClick = { navController.navigate("kiloalma") }
     )
@@ -217,7 +203,7 @@ fun KiloAlmaBox(navController: NavController) {
 @Composable
 fun KiloVermeBox(navController: NavController) {
     BoxWithImageAndText(
-        imageResId = R.drawable.zayiflama,
+        imageResId = R.drawable.hdkiloverme,
         text = "Kilo Verme",
         onClick = { navController.navigate("kiloverme") }
     )
@@ -226,7 +212,7 @@ fun KiloVermeBox(navController: NavController) {
 @Composable
 fun GutBox(navController: NavController) {
     BoxWithImageAndText(
-        imageResId = R.drawable.gut,
+        imageResId = R.drawable.hdgut,
         text = "Gut Sağlığı",
         onClick = { navController.navigate("gut") }
     )
@@ -235,7 +221,7 @@ fun GutBox(navController: NavController) {
 @Composable
 fun AnneveBebekBox(navController: NavController) {
     BoxWithImageAndText(
-        imageResId = R.drawable.annevebebek,
+        imageResId = R.drawable.hdannevebebek,
         text = "Anne ve Bebek Sağlığı",
         onClick = { navController.navigate("annevebebek") }
     )
@@ -244,7 +230,7 @@ fun AnneveBebekBox(navController: NavController) {
 @Composable
 fun MetaBox(navController: NavController) {
     BoxWithImageAndText(
-        imageResId = R.drawable.metabolik,
+        imageResId = R.drawable.hdmeta,
         text = "Metabolik Sendrom",
         onClick = { navController.navigate("meta") }
     )
@@ -253,7 +239,7 @@ fun MetaBox(navController: NavController) {
 @Composable
 fun KardiyoBox(navController: NavController) {
     BoxWithImageAndText(
-        imageResId = R.drawable.kardiyovaskuler,
+        imageResId = R.drawable.hdkardiyo,
         text = "Kardiyovasküler",
         onClick = { navController.navigate("kardiyo") }
     )
@@ -293,10 +279,7 @@ fun BoxWithImageAndText(imageResId: Int, text: String, onClick: () -> Unit) {
             )
         }
     }
-
 }
-
-
 @Preview
 @Composable
 fun DiyetView() {
