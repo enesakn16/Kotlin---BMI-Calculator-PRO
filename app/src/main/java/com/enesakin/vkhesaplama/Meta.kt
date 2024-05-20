@@ -10,9 +10,11 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
 @Composable
-fun Meta(navController: NavController){
-    Surface(modifier = Modifier
-        .fillMaxSize()) {
+fun Meta(navController: NavController) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         Text(text = "HELLO")
 
     }
@@ -20,7 +22,7 @@ fun Meta(navController: NavController){
 
 @Preview
 @Composable
-fun MetaView(){
+fun MetaView() {
     val navController = rememberNavController()
     Meta(navController = navController)
 }

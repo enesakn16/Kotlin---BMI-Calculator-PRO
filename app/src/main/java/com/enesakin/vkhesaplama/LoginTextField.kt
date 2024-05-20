@@ -44,7 +44,7 @@ fun LoginTextField(
             focusedContainerColor = MaterialTheme.colorScheme.textFieldContainer
         ),
         trailingIcon = {
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = { }) {
                 Text(
                     text = trailing,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium),
@@ -54,6 +54,7 @@ fun LoginTextField(
         }
     )
 }
+
 @Composable
 fun LoginTextField1(
     modifier: Modifier = Modifier,
@@ -81,7 +82,7 @@ fun LoginTextField1(
             focusedContainerColor = MaterialTheme.colorScheme.textFieldContainer
         ),
         trailingIcon = {
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = { }) {
                 Text(
                     text = trailing,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium),
@@ -91,6 +92,7 @@ fun LoginTextField1(
         }
     )
 }
+
 @Composable
 fun LoginTextField2(
     modifier: Modifier = Modifier,
@@ -119,7 +121,7 @@ fun LoginTextField2(
             focusedContainerColor = MaterialTheme.colorScheme.textFieldContainer
         ),
         trailingIcon = {
-            TextButton(onClick = { /*TODO*/ }) {
+            TextButton(onClick = { }) {
                 Text(
                     text = trailing,
                     style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.Medium),

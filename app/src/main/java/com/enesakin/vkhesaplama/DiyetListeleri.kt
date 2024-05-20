@@ -1,7 +1,5 @@
 package com.enesakin.vkhesaplama
 
-import android.preference.PreferenceActivity.Header
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -18,7 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -31,9 +28,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DiyetListeleri(preferenceHelper: PreferenceHelper,navController: NavController) {
+fun DiyetListeleri(preferenceHelper: PreferenceHelper, navController: NavController) {
     Surface {
         Image(
             painter = painterResource(id = R.drawable.back2), // Arka plan olarak kullanılacak resmin id'si
@@ -58,13 +54,13 @@ fun DiyetListeleri(preferenceHelper: PreferenceHelper,navController: NavControll
                     .fillMaxWidth()
                     .height(140.dp)
             ) {
-                item { kardiyoBox1(navController)}
-                item { metaBox1(navController)}
-                item { fitnessBox1(navController)}
-                item { kiloAlmaBox1(navController)}
-                item { kiloVermeBox1(navController)}
-                item { gutBox1(navController)}
-                item { anneveBebekBox1(navController)}
+                item { kardiyoBox1(navController) }
+                item { fitnessBox1(navController) }
+                item { metaBox1(navController) }
+                item { kiloAlmaBox1(navController) }
+                item { kiloVermeBox1(navController) }
+                item { gutBox1(navController) }
+                item { anneveBebekBox1(navController) }
             }
             val myColor = Color(0xFF32357A)
             HorizontalDivider(modifier = Modifier.padding(bottom = 10.dp))
@@ -83,69 +79,77 @@ fun DiyetListeleri(preferenceHelper: PreferenceHelper,navController: NavControll
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 100.dp)
-                    .background(color = myColor.copy(0.6f),
+                    .background(
+                        color = myColor.copy(0.6f),
                         shape = RoundedCornerShape(topEndPercent = 3, topStartPercent = 3)
                     )
             ) {
-                item { FitnessBox(navController)}
-                item { KiloAlmaBox(navController)}
-                item { KiloVermeBox(navController)}
-                item { GutBox(navController)}
-                item { AnneveBebekBox(navController)}
-                item { MetaBox(navController)}
-                item { KardiyoBox(navController)}
+                item { FitnessBox(navController) }
+                item { KiloAlmaBox(navController) }
+                item { KiloVermeBox(navController) }
+                item { GutBox(navController) }
+                item { AnneveBebekBox(navController) }
+                item { MetaBox(navController) }
+                item { KardiyoBox(navController) }
             }
         }
     }
 }
+
 @Composable
-fun fitnessBox1(navController: NavController){
+fun fitnessBox1(navController: NavController) {
     BoxWithImageAndTextRow(
         imageResId = R.drawable.fitness,
-        text ="Fitness",
+        text = "Fitness",
         onClick = { navController.navigate("fitness") }
     )
 }
+
 @Composable
-fun kiloAlmaBox1(navController: NavController){
+fun kiloAlmaBox1(navController: NavController) {
     BoxWithImageAndTextRow(
         imageResId = R.drawable.kiloalma,
-        text ="Kilo Alma",
+        text = "Kilo Alma",
         onClick = { navController.navigate("kiloalma") }
     )
 }
+
 @Composable
-fun kiloVermeBox1(navController: NavController){
+fun kiloVermeBox1(navController: NavController) {
     BoxWithImageAndTextRow(
         imageResId = R.drawable.zayiflama,
-        text ="Kilo Verme",
+        text = "Kilo Verme",
         onClick = { navController.navigate("kiloverme") }
     )
 }
+
 @Composable
-fun gutBox1(navController: NavController){
+fun gutBox1(navController: NavController) {
     BoxWithImageAndTextRow(
         imageResId = R.drawable.gut,
-        text ="GutBox",
+        text = "GutBox",
         onClick = { navController.navigate("gut") }
     )
 }
+
 @Composable
-fun anneveBebekBox1(navController: NavController){
+fun anneveBebekBox1(navController: NavController) {
     BoxWithImageAndTextRow(
         imageResId = R.drawable.annevebebek,
-        text ="Anne ve Bebek Sağlığı",
+        text = "Anne ve Bebek Sağlığı",
         onClick = { navController.navigate("annevebebek") }
     )
 }
+
 @Composable
-fun metaBox1(navController: NavController){
+fun metaBox1(navController: NavController) {
     BoxWithImageAndTextRow(
         imageResId = R.drawable.metabolik,
-        text ="Metabolik Sendrom",
+        text = "Metabolik Sendrom",
         onClick = { navController.navigate("meta") }
     )
 }
+
 @Composable
 fun kardiyoBox1(navController: NavController) {
     BoxWithImageAndTextRow(
@@ -209,6 +213,7 @@ fun KiloAlmaBox(navController: NavController) {
         onClick = { navController.navigate("kiloalma") }
     )
 }
+
 @Composable
 fun KiloVermeBox(navController: NavController) {
     BoxWithImageAndText(
@@ -255,7 +260,7 @@ fun KardiyoBox(navController: NavController) {
 }
 
 @Composable
-fun BoxWithImageAndText(imageResId: Int, text: String,onClick: () -> Unit) {
+fun BoxWithImageAndText(imageResId: Int, text: String, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

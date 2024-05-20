@@ -50,16 +50,14 @@ fun RegisteredProfileContent(navController: NavController, preferenceHelper: Pre
 fun ContentOfPreviously(navController: NavController, preferenceHelper: PreferenceHelper) {
     val username = preferenceHelper.getAdSoyad()
     val email = preferenceHelper.getEmail()
-    Surface{
+    Surface {
         Image(
             painter = painterResource(id = R.drawable.back2), // Arka plan olarak kullanılacak resmin id'si
-            contentDescription = "Background Image",
-            contentScale = ContentScale.FillBounds, // Resmin boyutunu ayarlamak için
+            contentDescription = "Background Image", contentScale = ContentScale.FillBounds, // Resmin boyutunu ayarlamak için
             modifier = Modifier.fillMaxSize() // Resmin boyutunu Surface ile aynı yapmak için
         )
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
             Box(
                 modifier = Modifier
@@ -92,8 +90,10 @@ fun ContentOfPreviously(navController: NavController, preferenceHelper: Preferen
                 .fillMaxWidth()
                 .padding(10.dp)
         ) {
-            Image(painterResource(id = R.drawable.profilresmi),
-                contentDescription = null, modifier = Modifier
+            Image(
+                painterResource(id = R.drawable.profilresmi),
+                contentDescription = null,
+                modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 200.dp)
             )
@@ -106,10 +106,7 @@ fun ContentOfPreviously(navController: NavController, preferenceHelper: Preferen
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "$username",
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 25.sp,
-                    color = Color.DarkGray
+                    text = "$username", fontWeight = FontWeight.Bold, fontSize = 25.sp, color = Color.DarkGray
                 )
             }
             Row(
@@ -121,14 +118,11 @@ fun ContentOfPreviously(navController: NavController, preferenceHelper: Preferen
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "$email",
-                    fontSize = 23.sp,
-                    color = Color.DarkGray
+                    text = "$email", fontSize = 23.sp, color = Color.DarkGray
                 )
             }
             Surface(
-                modifier = Modifier,
-                color = Color.Transparent
+                modifier = Modifier, color = Color.Transparent
             ) {
                 Column(
                     modifier = Modifier
@@ -136,38 +130,6 @@ fun ContentOfPreviously(navController: NavController, preferenceHelper: Preferen
                         .fillMaxHeight(),
                 ) {
                     val myColor = Color(0xFF32357A)
-                    Row {
-                        androidx.compose.material3.Button(
-                            onClick = { /*TODO*/ },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(start = 32.dp, end = 32.dp, top = 10.dp, bottom = 10.dp)
-                                .height(55.dp),
-                            colors = androidx.compose.material3.ButtonDefaults.buttonColors(
-                                containerColor = Color.White, // Arka plan rengini burada belirleyin
-                                contentColor = Color.Black // İçerik rengini isteğe bağlı olarak belirleyebilirsiniz
-                            ),
-                            shape = RoundedCornerShape(15)
-                        ) {
-                            Image(painter = painterResource(id = R.drawable.baseline_favorite_24),
-                                contentDescription = "",
-                                modifier = Modifier
-                                    .padding(end = 5.dp)
-                                    .clickable { }
-                                    .height(35.dp)
-                                    .width(35.dp))
-                            Column(
-                                modifier = Modifier
-                                    .padding(start = 16.dp)
-                                    .weight(1f),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.Start
-                            ) {
-                                Text(text = "Favorilerim", color = Color.Black, fontSize = 18.sp, fontWeight = FontWeight.Bold)
-                            }
-                        }
-
-                    }
                     Row {
                         androidx.compose.material3.Button(
                             onClick = { navController.navigate("profilelogintrue") },
@@ -216,10 +178,7 @@ fun ContentOfPreviously(navController: NavController, preferenceHelper: Preferen
                             shape = RoundedCornerShape(15)
                         ) {
                             Text(
-                                text = "Anasayfaya Geri Dön",
-                                color = Color.White,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.Bold
+                                text = "Anasayfaya Geri Dön", color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold
                             )
                         }
 
@@ -229,6 +188,7 @@ fun ContentOfPreviously(navController: NavController, preferenceHelper: Preferen
         }
     }
 }
+
 @Preview
 @Composable
 fun ProfilePreview() {

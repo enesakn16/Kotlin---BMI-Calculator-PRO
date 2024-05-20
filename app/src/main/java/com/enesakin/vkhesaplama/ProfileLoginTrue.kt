@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.Color
 import com.enesakin.vkhesaplama.ui.theme.BlueGray
 
 @Composable
-fun ProfileLoginTrue(preferenceHelper: PreferenceHelper,navController: NavController) {
+fun ProfileLoginTrue(preferenceHelper: PreferenceHelper, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -37,7 +37,8 @@ fun ProfileLoginTrue(preferenceHelper: PreferenceHelper,navController: NavContro
             modifier = Modifier.padding(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = BlueGray,
-                contentColor = Color.White)
+                contentColor = Color.White
+            )
         ) {
             Text("Kayıt Ol")
         }
@@ -46,7 +47,8 @@ fun ProfileLoginTrue(preferenceHelper: PreferenceHelper,navController: NavContro
             modifier = Modifier.padding(8.dp),
             colors = ButtonDefaults.buttonColors(
                 containerColor = BlueGray,
-                contentColor = Color.White)
+                contentColor = Color.White
+            )
         ) {
             Text("Giriş Yap")
         }

@@ -82,6 +82,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -121,7 +122,7 @@ class PreferenceHelper(context: Context) {
     }
 
     fun getWeight(): String {
-        return sharedPreferences.getString(WEIGHT_KEY, null)?: ""
+        return sharedPreferences.getString(WEIGHT_KEY, null) ?: ""
     }
 
     // Boy kaydetme bölümü
@@ -143,7 +144,7 @@ class PreferenceHelper(context: Context) {
     }
 
     fun getBMI(): String {
-        return sharedPreferences.getString(BMI_KEY, null)?: ""
+        return sharedPreferences.getString(BMI_KEY, null) ?: ""
     }
 
     // İdeal kilo kaydetme bölümü
@@ -154,7 +155,7 @@ class PreferenceHelper(context: Context) {
     }
 
     fun getIdealWeight(): String {
-        return sharedPreferences.getString(IDEAL_WEIGHT_KEY, null)?: ""
+        return sharedPreferences.getString(IDEAL_WEIGHT_KEY, null) ?: ""
     }
 
     // AdSoyad kaydetme bölümü
@@ -165,7 +166,7 @@ class PreferenceHelper(context: Context) {
     }
 
     fun getAdSoyad(): String {
-        return sharedPreferences.getString(AD_SOYAD_KEY, null)?: ""
+        return sharedPreferences.getString(AD_SOYAD_KEY, null) ?: ""
     }
 
     // E-posta kaydetme bölümü
@@ -176,7 +177,7 @@ class PreferenceHelper(context: Context) {
     }
 
     fun getEmail(): String {
-        return sharedPreferences.getString(EMAIL_KEY, null)?: ""
+        return sharedPreferences.getString(EMAIL_KEY, null) ?: ""
     }
 
     // Şifre kaydetme bölümü
@@ -187,7 +188,7 @@ class PreferenceHelper(context: Context) {
     }
 
     fun getPassword(): String {
-        return sharedPreferences.getString(PASSWORD_KEY, null)?: ""
+        return sharedPreferences.getString(PASSWORD_KEY, null) ?: ""
     }
     fun isRegistered(): Boolean {
         // Kullanıcı kaydı kontrolü yapılacak
@@ -212,11 +213,13 @@ class MainActivity : ComponentActivity() {
             alarmInterval,
             pendingIntent
         )
+        installSplashScreen()
         setContent {
             VKİHesaplamaTheme {
-                Surface(
+                Box(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background)
+                    contentAlignment = Alignment.Center
+                )
                 {
                     NavBotSheet(preferenceHelper)
                 }
@@ -224,10 +227,11 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NavBotSheet(preferenceHelper: PreferenceHelper){
+fun NavBotSheet(preferenceHelper: PreferenceHelper) {
     val username = preferenceHelper.getAdSoyad()
     val email = preferenceHelper.getEmail()
     val navigationController = rememberNavController()
@@ -238,7 +242,7 @@ fun NavBotSheet(preferenceHelper: PreferenceHelper){
         mutableStateOf(Icons.Default.Home)
     }
     val sheetState = rememberModalBottomSheetState()
-    var showBottomSheet by remember{
+    var showBottomSheet by remember {
         mutableStateOf(false)
     }
     ModalNavigationDrawer(
@@ -248,24 +252,32 @@ fun NavBotSheet(preferenceHelper: PreferenceHelper){
             ModalDrawerSheet {
                 val myColor = Color(0xFF32357A)
                 val myColor1 = Color(0xFF000080)
-                Box(modifier = Modifier
-                    .background(color = myColor)
-                    .fillMaxWidth()
-                    .height(230.dp)) {
-                    Row(modifier = Modifier
+                Box(
+                    modifier = Modifier
+                        .background(color = myColor)
                         .fillMaxWidth()
-                        .fillMaxSize(),
+                        .height(230.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxSize(),
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically){
-                        Image(painterResource(id = R.drawable.profilresmi),
-                            contentDescription = "")
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Image(
+                            painterResource(id = R.drawable.profilresmi),
+                            contentDescription = ""
+                        )
                     }
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxSize()
-                        .padding(top = 100.dp),
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxSize()
+                            .padding(top = 100.dp),
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically) {
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(
                             text = "$username",
                             color = Color.White,
@@ -273,12 +285,14 @@ fun NavBotSheet(preferenceHelper: PreferenceHelper){
                         )
                     }
                     Spacer(modifier = Modifier.width(8.dp))
-                    Row (modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxSize()
-                        .padding(top = 140.dp),
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxSize()
+                            .padding(top = 140.dp),
                         horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically){
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Text(
                             text = "$email",
                             color = Color.White,
@@ -294,50 +308,67 @@ fun NavBotSheet(preferenceHelper: PreferenceHelper){
                 )
                 val myColor0 = Color(0xFF32357A)
                 Spacer(modifier = Modifier.height(20.dp))
-                NavigationDrawerItem(label = { Text(text = "Anasayfa", color = myColor0, fontWeight = FontWeight.Bold, fontSize = 20.sp) },
+                NavigationDrawerItem(label = {
+                    Text(
+                        text = "Anasayfa",
+                        color = myColor0,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                },
                     selected = false,
-                    icon = {Icon(imageVector = Icons.Default.Home, contentDescription ="home", tint = Color.Black, modifier = Modifier.scale(1.5f))},
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Home,
+                            contentDescription = "home",
+                            tint = Color.Black,
+                            modifier = Modifier.scale(1.5f)
+                        )
+                    },
                     onClick = {
                         coroutineScope.launch {
                             drawerState.close()
                         }
-                        navigationController.navigate(Screens.Home.screen){
+                        navigationController.navigate(Screens.Home.screen) {
                             popUpTo(0)
                         }
                     })
                 Spacer(modifier = Modifier.height(20.dp))
-                NavigationDrawerItem(label = { Text(text = "Profil", color = myColor0, fontWeight = FontWeight.Bold, fontSize = 20.sp) },
+                NavigationDrawerItem(label = {
+                    Text(
+                        text = "Profil",
+                        color = myColor0,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    )
+                },
                     selected = false,
-                    icon = {Icon(imageVector = Icons.Default.Person, contentDescription ="com.enesakin.vkhesaplama.RegisteredProfilContent", tint = Color.Black, modifier = Modifier.scale(1.5f))},
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Person,
+                            contentDescription = "com.enesakin.vkhesaplama.RegisteredProfilContent",
+                            tint = Color.Black,
+                            modifier = Modifier.scale(1.5f)
+                        )
+                    },
                     onClick = {
                         coroutineScope.launch {
                             drawerState.close()
                         }
-                        navigationController.navigate(Screens.RegisteredProfilContent.screen){
+                        navigationController.navigate(Screens.RegisteredProfilContent.screen) {
                             popUpTo(0)
                         }
                     })
                 Spacer(modifier = Modifier.height(20.dp))
-                NavigationDrawerItem(label = { Text(text = "Ayarlar", color = myColor0, fontWeight = FontWeight.Bold, fontSize = 20.sp) },
-                    selected = false,
-                    icon = {Icon(imageVector = Icons.Default.Settings, contentDescription ="Settings", tint = Color.Black, modifier = Modifier.scale(1.5f))},
-                    onClick = {
-                        coroutineScope.launch {
-                            drawerState.close()
-                        }
-                        navigationController.navigate(Screens.Settings.screen){
-                            popUpTo(0)
-                        }
-                    })
             }
         },
-        ) {
+    ) {
         val myColor = Color(0xFF32357A)
         Scaffold(
             topBar = {
 
                 val sheetcoroutineScope = rememberCoroutineScope()
-                TopAppBar(title = {Text(text = "İdeal Kilo Hesaplama")},
+                TopAppBar(title = { Text(text = "İdeal Kilo Hesaplama") },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = myColor,
                         titleContentColor = Color.White,
@@ -348,7 +379,7 @@ fun NavBotSheet(preferenceHelper: PreferenceHelper){
                             sheetcoroutineScope.launch {
                                 drawerState.open()
                             }
-                        }){
+                        }) {
                             Icon(
                                 Icons.Rounded.Menu, contentDescription = "MenuButton",
                                 tint = Color.White
@@ -362,12 +393,14 @@ fun NavBotSheet(preferenceHelper: PreferenceHelper){
                     //HOME
                     IconButton(onClick = {
                         selected.value = Icons.Default.Home
-                        navigationController.navigate(Screens.Home.screen){
+                        navigationController.navigate(Screens.Home.screen) {
                             popUpTo(0)
                         }
                     }, modifier = Modifier.weight(1f)) {
-                        Icon(Icons.Default.Home, contentDescription = null, modifier = Modifier.size(28.dp),
-                            tint = if (selected.value == Icons.Default.Home) Color.White else Color.LightGray)
+                        Icon(
+                            Icons.Default.Home, contentDescription = null, modifier = Modifier.size(28.dp),
+                            tint = if (selected.value == Icons.Default.Home) Color.White else Color.LightGray
+                        )
                     }
                     //HOME
 
@@ -376,98 +409,107 @@ fun NavBotSheet(preferenceHelper: PreferenceHelper){
                     val myImageVector1: ImageVector = ImageVector.vectorResource(R.drawable.food)
                     IconButton(onClick = {
                         selected.value = myImageVector
-                        navigationController.navigate(Screens.Past.screen){
+                        navigationController.navigate(Screens.Past.screen) {
                             popUpTo(0)
                         }
                     }, modifier = Modifier.weight(1f)) {
-                        Icon(imageVector = myImageVector,
+                        Icon(
+                            imageVector = myImageVector,
                             contentDescription = null, modifier = Modifier.size(28.dp),
-                            tint = if (selected.value == myImageVector) Color.White else Color.LightGray)
+                            tint = if (selected.value == myImageVector) Color.White else Color.LightGray
+                        )
                     }
                     //SEARCH
-
-                    //ADD
-                    Box(modifier = Modifier
-                        .weight(1f)
-                        .padding(14.dp),
-                        contentAlignment = Alignment.Center){
-                        FloatingActionButton(onClick = { showBottomSheet = true }) {
-                            Icon(Icons.Default.Add, contentDescription = null, tint = myColor)
-                        }
-                    }
-                    //ADD
-
                     //DİYET LİSTELERİ
                     IconButton(onClick = {
                         selected.value = myImageVector1
-                        navigationController.navigate(Screens.DiyetListeleri.screen){
+                        navigationController.navigate(Screens.DiyetListeleri.screen) {
                             popUpTo(0)
                         }
                     }, modifier = Modifier.weight(1f)) {//burada weight var normalde
-                        Icon(imageVector = myImageVector1,
+                        Icon(
+                            imageVector = myImageVector1,
                             contentDescription = null, modifier = Modifier.size(28.dp),
-                            tint = if (selected.value == myImageVector1) Color.White else Color.LightGray)
+                            tint = if (selected.value == myImageVector1) Color.White else Color.LightGray
+                        )
                     }
                     //DİYET LİSTELERİ
 
                     //PROFİL
                     IconButton(onClick = {
                         selected.value = Icons.Default.Person
-                        navigationController.navigate(Screens.RegisteredProfilContent.screen){
+                        navigationController.navigate(Screens.RegisteredProfilContent.screen) {
                             popUpTo(0)
                         }
                     }, modifier = Modifier.weight(1f)) {
-                        Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(28.dp),
-                            tint = if (selected.value == Icons.Default.Person) Color.White else Color.LightGray)
+                        Icon(
+                            Icons.Default.Person, contentDescription = null, modifier = Modifier.size(28.dp),
+                            tint = if (selected.value == Icons.Default.Person) Color.White else Color.LightGray
+                        )
                     }
                     //PROFİL
                 }
             }
         ) {
-            NavHost(navController = navigationController,
-                startDestination = Screens.Home.screen){
-                composable(Screens.Home.screen){ Home(preferenceHelper = PreferenceHelper(context))}
-                composable(Screens.RegisteredProfilContent.screen){ RegisteredProfileContent(navigationController, preferenceHelper = PreferenceHelper(context)) }
-                composable(Screens.Settings.screen){ Settings(navigationController,preferenceHelper) }
-                composable(Screens.Past.screen){ Past(preferenceHelper = PreferenceHelper(context)) }
-                composable(Screens.DiyetListeleri.screen){ DiyetListeleri(preferenceHelper,navigationController) }
-                composable(Screens.Photo.screen){ Post() }
-                composable(Screens.Login.screen){ Login(navigationController,preferenceHelper = PreferenceHelper(context))}
-                composable(Screens.Register.screen){ Register(preferenceHelper = PreferenceHelper(context),navigationController)}
-                composable(Screens.ProfileLoginTrue.screen){ ProfileLoginTrue(preferenceHelper = PreferenceHelper(context),navigationController)}
-                composable(Screens.Fitness.screen){ FitnessPage(navigationController)}
-                composable(Screens.KiloAlma.screen){ KiloAlma(navigationController)}
-                composable(Screens.KiloVerme.screen){ KiloVerme(navigationController) }
-                composable(Screens.Gut.screen){ Gut(navigationController) }
-                composable(Screens.AnneveBebek.screen){ AnneveBebek(navigationController) }
-                composable(Screens.Meta.screen){ Meta(navigationController) }
-                composable(Screens.Kardiyo.screen){ Kardiyo(navigationController) }
+            NavHost(
+                navController = navigationController,
+                startDestination = Screens.Home.screen
+            ) {
+                composable(Screens.Home.screen) { Home(preferenceHelper = PreferenceHelper(context)) }
+                composable(Screens.RegisteredProfilContent.screen) {
+                    RegisteredProfileContent(
+                        navigationController,
+                        preferenceHelper = PreferenceHelper(context)
+                    )
+                }
+                composable(Screens.Past.screen) { Past(preferenceHelper = PreferenceHelper(context)) }
+                composable(Screens.DiyetListeleri.screen) { DiyetListeleri(preferenceHelper, navigationController) }
+                composable(Screens.Photo.screen) { Photo(navigationController) }
+                composable(Screens.Login.screen) { Login(navigationController, preferenceHelper = PreferenceHelper(context)) }
+                composable(Screens.Register.screen) {
+                    Register(
+                        preferenceHelper = PreferenceHelper(context),
+                        navigationController
+                    )
+                }
+                composable(Screens.ProfileLoginTrue.screen) {
+                    ProfileLoginTrue(
+                        preferenceHelper = PreferenceHelper(context),
+                        navigationController
+                    )
+                }
+                composable(Screens.Fitness.screen) { FitnessPage(navigationController) }
+                composable(Screens.KiloAlma.screen) { KiloAlma(navigationController) }
+                composable(Screens.KiloVerme.screen) { KiloVerme(navigationController) }
+                composable(Screens.Gut.screen) { Gut(navigationController) }
+                composable(Screens.AnneveBebek.screen) { AnneveBebek(navigationController) }
+                composable(Screens.Meta.screen) { Meta(navigationController) }
+                composable(Screens.Kardiyo.screen) { Kardiyo(navigationController) }
+                composable(Screens.Splash.screen) { SplashScreen(navigationController) }
             }
         }
-        if (showBottomSheet){
-            ModalBottomSheet(onDismissRequest = { showBottomSheet = false },
+        if (showBottomSheet) {
+            ModalBottomSheet(
+                onDismissRequest = { showBottomSheet = false },
                 sheetState = sheetState
             ) {
-                Column (modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(18.dp),
-                    verticalArrangement = Arrangement.spacedBy(5.dp)){
-                    BottomSheetItem(icon = Icons.Default.Add, title ="Fotoğraf Ekle" ) {
-                        showBottomSheet = false
-                        navigationController.navigate(Screens.Photo.screen){
-                            popUpTo(0)
-                        }
-                    }
-                    BottomSheetItem(icon = Icons.Default.MailOutline, title ="İletişim" ) {
-                        Toast.makeText(context,"İletişim",Toast.LENGTH_SHORT).show()
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(18.dp),
+                    verticalArrangement = Arrangement.spacedBy(5.dp)
+                ) {
+                    BottomSheetItem(icon = Icons.Default.MailOutline, title = "İletişim") {
+                        Toast.makeText(context, "İletişim", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
     }
 }
+
 @Composable
-fun SpecialText(string: String){
+fun SpecialText(string: String) {
     Text(
         text = string,
         fontSize = 20.sp,
@@ -477,6 +519,7 @@ fun SpecialText(string: String){
         fontWeight = FontWeight.Bold
     )
 }
+
 @Composable
 fun SpecialTextField1(
     string: String,
@@ -559,7 +602,8 @@ fun SpecialTextField(
                 text = "cm",
                 modifier = Modifier.alpha(0.5f)
             )
-        },label = {
+        },
+        label = {
             Text(
                 text = "Boy",
                 color = Color.Black.copy(alpha = 0.3f),
@@ -580,6 +624,7 @@ fun SpecialTextField(
         shape = RoundedCornerShape(10.dp),
     )
 }
+
 @Composable
 fun GenderButton(
     modifier: Modifier,
@@ -588,12 +633,14 @@ fun GenderButton(
     iconId: Int,
     onGenderSelected: () -> Unit
 ) {
-    val iconId = if (gender == "Kadın") R.drawable.kadin1 else R.drawable.adam1 // GenderButton için hangi ikonun kullanılacağını belirleme
+    val iconId =
+        if (gender == "Kadın") R.drawable.kadin1 else R.drawable.adam1 // GenderButton için hangi ikonun kullanılacağını belirleme
     val textColor = if (isSelected) Color.White else Color.Black
-    val backgroundColor = if (isSelected && gender == "Kadın")
-    {Color(0xFFF04DA1)}
-    else if (isSelected && gender == "Erkek"){ Color(0xFF007BA7)}
-    else Color(0xFFF5F5F5)
+    val backgroundColor = if (isSelected && gender == "Kadın") {
+        Color(0xFFF04DA1)
+    } else if (isSelected && gender == "Erkek") {
+        Color(0xFF007BA7)
+    } else Color(0xFFF5F5F5)
 
     Button(
         onClick = { onGenderSelected() },
@@ -624,6 +671,7 @@ fun GenderButton(
         }
     }
 }
+
 fun calculateProgress(bmi: Float): Float {
     // VKİ'ye göre bir ilerleme oranı hesapla
     // Örnek bir hesaplama: VKİ 18.5 ise 0.2, VKİ 24.9 ise 0.5, VKİ 29.9 ise 0.8 gibi
@@ -634,6 +682,7 @@ fun calculateProgress(bmi: Float): Float {
         else -> 1.0f
     }
 }
+
 fun calculateProgressColor(bmi: Float): Color {
     return when {
         bmi < 18.5 -> Color.Green // VKİ 18.5'ten küçükse yeşil
@@ -642,6 +691,7 @@ fun calculateProgressColor(bmi: Float): Color {
         else -> Color.Red // Diğer durumlarda kırmızı
     }
 }
+
 fun calculateBMI(height: Float?, weight: Float?): Float? {
     // Boy veya kilo değerleri null ise null döndür
     if (height == null || weight == null) {
@@ -675,17 +725,19 @@ fun SimpleButton(onClick: () -> Unit, modifier: Modifier) {
             .fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color(0xFF32357A),
-            contentColor = Color.White)
+            contentColor = Color.White
+        )
     ) {
         Text(text = "Hesapla")
     }
 }
 @Composable
-fun BottomSheetItem(icon: ImageVector,title: String, onClick: () -> Unit){
+fun BottomSheetItem(icon: ImageVector, title: String, onClick: () -> Unit) {
     Row(verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         modifier = Modifier.clickable { onClick() }
-    ){val myColor = Color(0xFF007BA7)
+    ) {
+        val myColor = Color(0xFF007BA7)
         Icon(icon, contentDescription = null, tint = myColor)
         Text(text = title, color = Color.Black, fontSize = 22.sp)
     }

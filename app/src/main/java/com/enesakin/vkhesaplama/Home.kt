@@ -54,11 +54,13 @@ fun Home(preferenceHelper: PreferenceHelper) {
         val weightFloat = weight.toFloatOrNull()
         return weightFloat != null && weightFloat > 0
     }
+
     fun saveDateTimeToDatabase() {
         val currentDateTimeMillis = System.currentTimeMillis()
         preferenceHelper.saveDateTime(currentDateTimeMillis)
         Log.d("MainScreen", "DateTime saved to database: $currentDateTimeMillis")
     }
+
     fun saveWeightToDatabase(weight: String) {
         if (weight.isNotEmpty()) {
             preferenceHelper.saveWeight(weight)
@@ -67,6 +69,7 @@ fun Home(preferenceHelper: PreferenceHelper) {
             Log.d("MainScreen", "Weight is empty, cannot save to database")
         }
     }
+
     fun saveHeightToDatabase(height: String) {
         if (height.isNotEmpty()) {
             preferenceHelper.saveHeight(height)
@@ -93,7 +96,7 @@ fun Home(preferenceHelper: PreferenceHelper) {
             Log.d("MainScreen", "Ideal weight is empty, cannot save to database")
         }
     }
-    Surface(color = myColor5,modifier = Modifier.fillMaxSize()) {
+    Surface(color = myColor5, modifier = Modifier.fillMaxSize()) {
         Image(
             painter = painterResource(id = R.drawable.back2), // Arka plan olarak kullanılacak resmin id'si
             contentDescription = "Background Image",
@@ -144,15 +147,17 @@ fun Home(preferenceHelper: PreferenceHelper) {
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
-            Surface (modifier = Modifier
-                .fillMaxWidth()
-                .height(100.dp)
-                .padding(top = 20.dp, bottom = 10.dp, start = 5.dp, end = 5.dp)
-                .shadow(
-                    elevation = 3.dp,
-                    shape = RoundedCornerShape(13.dp),
-                    clip = true
-                )){
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp)
+                    .padding(top = 20.dp, bottom = 10.dp, start = 5.dp, end = 5.dp)
+                    .shadow(
+                        elevation = 3.dp,
+                        shape = RoundedCornerShape(13.dp),
+                        clip = true
+                    )
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly,
@@ -183,12 +188,11 @@ fun Home(preferenceHelper: PreferenceHelper) {
             Spacer(modifier = Modifier.height(16.dp))
             SimpleButton(
                 onClick = {
-                    // Boy ve kilo girişlerinin geçerliliğini kontrol et
                     val isHeightValid = isHeightValid(height)
                     val isWeightValid = isWeightValid(weight)
 
                     if (gender.isEmpty() || !isHeightValid || !isWeightValid) {
-                        // Cinsiyet veya boy/kilo bilgisi geçersizse uyarı göster
+
                         val errorMessage = when {
                             height.isEmpty() && weight.isEmpty() && gender.isEmpty() -> "Boy ve kilo bilgilerinizi giriniz."
                             height.isEmpty() && weight.isEmpty() -> "Boy ve kilonuzu giriniz."
@@ -200,10 +204,9 @@ fun Home(preferenceHelper: PreferenceHelper) {
                             else -> ""
                         }
                         if (errorMessage.isNotEmpty()) {
-                            // Hata mesajı işleniyor...
+
                         }
                     } else {
-                        // Bilgiler eksiksiz ise işlemi gerçekleştir
                         val heightFloat = height.toFloatOrNull()
                         val weightFloat = weight.toFloatOrNull()
                         if (heightFloat != null && weightFloat != null) {
@@ -243,7 +246,7 @@ fun Home(preferenceHelper: PreferenceHelper) {
                         fontFamily = FontFamily.SansSerif
                     )
 
-                    // VKİ'ye göre çoğalan bir progress bar ekleyelim
+                    // VKİ'ye göre çoğalan progress bar
                     Spacer(modifier = Modifier.height(16.dp))
                     CircularProgressIndicator(
                         progress = { bmi?.let { calculateProgress(it) } ?: 0f },
@@ -283,7 +286,8 @@ fun Home(preferenceHelper: PreferenceHelper) {
             }
         }
     }
-    }
+}
+
 @Preview
 @Composable
 fun NavBotSheetPreview1() {

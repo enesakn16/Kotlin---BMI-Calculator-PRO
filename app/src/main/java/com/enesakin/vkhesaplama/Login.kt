@@ -60,9 +60,11 @@ fun Login(navController: NavController, preferenceHelper: PreferenceHelper) {
             TopSection()
             Spacer(modifier = Modifier.height(22.dp))
 
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 30.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 30.dp)
+            ) {
                 LoginTextField1(
                     label = "E-Posta",
                     trailing = "",
@@ -115,6 +117,7 @@ fun Login(navController: NavController, preferenceHelper: PreferenceHelper) {
         }
     }
 }
+
 @Composable
 fun ClickableLoginText1(navController: NavController) {
     val text = buildAnnotatedString {
@@ -125,7 +128,7 @@ fun ClickableLoginText1(navController: NavController) {
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Medium
             )
-        ){
+        ) {
             append("Henüz bir hesabınız yok mu?")
         }
         withStyle(
@@ -135,7 +138,7 @@ fun ClickableLoginText1(navController: NavController) {
                 fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Medium,
             )
-        ){
+        ) {
             append(" Üye Ol")
         }
     }
@@ -145,6 +148,7 @@ fun ClickableLoginText1(navController: NavController) {
         modifier = Modifier.clickable { navController.navigate("register") }
     )
 }
+
 @Composable
 private fun TopSection() {
     val myColor5 = Color(0xFFF5F5F5)
@@ -206,7 +210,7 @@ private fun TopSection() {
 
 @Preview
 @Composable
-fun LoginScreenPreview(){
+fun LoginScreenPreview() {
     val navController = rememberNavController()
     val sharedPreferences = PreferenceHelper(LocalContext.current)
     VKİHesaplamaTheme {

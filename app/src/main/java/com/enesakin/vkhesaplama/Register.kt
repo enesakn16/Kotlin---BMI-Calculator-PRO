@@ -51,7 +51,7 @@ import com.enesakin.vkhesaplama.ui.theme.BlueGray
 import com.enesakin.vkhesaplama.ui.theme.VKİHesaplamaTheme
 
 @Composable
-fun Register(preferenceHelper: PreferenceHelper,navController: NavController) {
+fun Register(preferenceHelper: PreferenceHelper, navController: NavController) {
     var adSoyad by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var sifre by remember { mutableStateOf("") }
@@ -64,6 +64,7 @@ fun Register(preferenceHelper: PreferenceHelper,navController: NavController) {
             null
         }
     }
+
     fun isepostaValid(eposta: String): String? {
         return if (eposta.isBlank()) {
             "E-Posta Boş Olamaz."
@@ -71,6 +72,7 @@ fun Register(preferenceHelper: PreferenceHelper,navController: NavController) {
             null
         }
     }
+
     fun isSifreValid(sifre: String): String? {
         return if (sifre.isBlank()) {
             "Şifre Boş Olamaz."
@@ -78,6 +80,7 @@ fun Register(preferenceHelper: PreferenceHelper,navController: NavController) {
             null
         }
     }
+
     fun saveFullNameToDatabase(adSoyad: String) {
         if (adSoyad.isNotEmpty()) {
             preferenceHelper.saveAdSoyad(adSoyad)
@@ -115,9 +118,11 @@ fun Register(preferenceHelper: PreferenceHelper,navController: NavController) {
             TopSection1()
             Spacer(modifier = Modifier.height(22.dp))
 
-            Column(modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 30.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 30.dp)
+            ) {
                 LoginTextField(
                     label = "Ad Soyad",
                     trailing = "",
@@ -182,6 +187,7 @@ fun isEmailRegistered(email: String, preferenceHelper: PreferenceHelper): Boolea
     val savedEmail = preferenceHelper.getEmail()
     return savedEmail != null && savedEmail == email
 }
+
 @Composable
 fun ClickableLoginText(navController: NavController) {
     val text = buildAnnotatedString {
@@ -192,7 +198,7 @@ fun ClickableLoginText(navController: NavController) {
                 fontFamily = FontFamily.SansSerif,
                 fontWeight = FontWeight.Medium
             )
-        ){
+        ) {
             append("Zaten bir hesabınız var mı?")
         }
         withStyle(
@@ -202,7 +208,7 @@ fun ClickableLoginText(navController: NavController) {
                 fontFamily = FontFamily.Default,
                 fontWeight = FontWeight.Medium,
             )
-        ){
+        ) {
             append(" Giriş Yap")
         }
     }
@@ -212,6 +218,7 @@ fun ClickableLoginText(navController: NavController) {
         modifier = Modifier.clickable { navController.navigate("login") }
     )
 }
+
 @Composable
 private fun TopSection1() {
     val myColor5 = Color(0xFFF5F5F5)
@@ -270,6 +277,7 @@ private fun TopSection1() {
         )
     }
 }
+
 @Preview
 @Composable
 fun RegisterScreenPreview() {

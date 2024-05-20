@@ -37,15 +37,11 @@ import com.enesakin.vkhesaplama.ui.theme.VKİHesaplamaTheme
 @Composable
 fun Past(preferenceHelper: PreferenceHelper) {
     val savedDataList = remember { mutableStateListOf<String>() }
-    // Eski verileri alıp listeye ekleme
     val dateTime = preferenceHelper.getDateTime()
     val weight = preferenceHelper.getWeight()
     val height = preferenceHelper.getHeight()
     val bmi = preferenceHelper.getBMI()
     val idealWeight = preferenceHelper.getIdealWeight()
-    val kayıtlar = remember { mutableStateListOf<String>() }
-    val gecmisKayitlari = listOf("$dateTime","#$weight","$height","$bmi","$idealWeight")
-    // Buradan sonra geçmiş kayıtlar yeni bir liste  halinde yazdırılacak onun kodu yazılacak
     val savedDataText = buildString {
         appendLine("Son Kaydedilen Tarih: ${dateTime.let { SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.getDefault()).format(it) } ?: "Kaydedilmemiş"}")
         appendLine("Kilo: ${weight ?: "Kaydedilmemiş"}")
@@ -133,7 +129,7 @@ fun SavedDataView(preferenceHelper: PreferenceHelper) {
             ) {
                 Text(
                     text = "Son Kaydedilen Tarih: ${
-                        dateTime?.let {
+                        dateTime.let {
                             SimpleDateFormat(
                                 "dd-MM-yyyy HH:mm:ss",
                                 Locale.getDefault()

@@ -2,20 +2,14 @@ package com.enesakin.vkhesaplama
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -33,14 +27,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import androidx.wear.compose.material3.Text
 
 @Composable
 fun Settings(navController: NavController, preferenceHelper: PreferenceHelper) {
     val username = preferenceHelper.getAdSoyad()
     val email = preferenceHelper.getEmail()
-    val myColor5 = Color(0xFFF5F5F5)
-    Surface{
+    Surface {
         Image(
             painter = painterResource(id = R.drawable.arkaplan), // Arka plan olarak kullanılacak resmin id'si
             contentDescription = "Background Image",
@@ -120,6 +112,7 @@ fun Settings(navController: NavController, preferenceHelper: PreferenceHelper) {
         }
     }
 }
+
 @Preview
 @Composable
 fun SettingsPreview1() {
