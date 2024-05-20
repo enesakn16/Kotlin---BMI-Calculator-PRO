@@ -8,7 +8,7 @@ BMI Calculator Pro is an intuitive and easy-to-use mobile application that helps
 - Display BMI category (underweight, normal weight, overweight, obese)
 - User-friendly interface
 - Supports both metric and imperial units
-- 
+
 - ## Screenshots
 ![Home Screen](screenshots/rateus.jpeg)
 ![Home1 Screen](screenshots/homescreen.jpeg)
