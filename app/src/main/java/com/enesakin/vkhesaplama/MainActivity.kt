@@ -2,11 +2,15 @@ package com.enesakin.vkhesaplama
 
 import android.annotation.SuppressLint
 import android.app.AlarmManager
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.SystemClock
 import android.view.ContextThemeWrapper
@@ -81,6 +85,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -194,6 +200,13 @@ class PreferenceHelper(context: Context) {
         val email = getEmail()
         return !email.isNullOrEmpty()
     }
+    fun setNotificationPermissionGranted(isGranted: Boolean) {
+        sharedPreferences.edit().putBoolean("notification_permission_granted", isGranted).apply()
+    }
+
+    fun getNotificationPermissionGranted(): Boolean {
+        return sharedPreferences.getBoolean("notification_permission_granted", false)
+    }
 }
 
 class MainActivity : ComponentActivity() {
@@ -207,17 +220,35 @@ class MainActivity : ComponentActivity() {
         setContent {
             VKİHesaplamaTheme {
                 var showDialog by remember { mutableStateOf(true) }
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    NavBotSheet(preferenceHelper)
-                }
+                val permissionGranted = preferenceHelper.getNotificationPermissionGranted()
+                var showDialog1 by remember { mutableStateOf(!permissionGranted) }
+
                 if (showDialog) {
                     RateUsDialog(
                         onRateUs = { rateUs() },
                         onClose = { showDialog = false }
                     )
+                } else if (showDialog1) {
+                    NotificationPermissionDialog(
+                        onPermissionGranted = {
+                            allowNotifications()
+                            showDialog1 = false // İzin verildikten sonra dialog kapat
+                            // İzin verildikten sonra bu durumu sakla
+                            preferenceHelper.setNotificationPermissionGranted(false)
+                        },
+                        onClose = {
+                            showDialog1 = false
+                            // Kullanıcı kapat dediğinde de bu durumu sakla
+                            preferenceHelper.setNotificationPermissionGranted(false)
+                        }
+                    )
+                }
+
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    NavBotSheet(preferenceHelper)
                 }
             }
         }
@@ -226,13 +257,55 @@ class MainActivity : ComponentActivity() {
         val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
         val alarmIntent = Intent(this, AlarmReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_IMMUTABLE)
-        val alarmInterval = AlarmManager.INTERVAL_DAY
-        alarmManager.setRepeating(
-            AlarmManager.ELAPSED_REALTIME_WAKEUP,
-            SystemClock.elapsedRealtime() + alarmInterval,
-            alarmInterval,
+
+        // Şu andan 10 saniye sonra alarmı ayarla
+        val triggerTime = System.currentTimeMillis() + 10000 // 10 saniye
+
+        // Alarmı kur
+        alarmManager.setExact(
+            AlarmManager.RTC_WAKEUP,
+            triggerTime,
             pendingIntent
         )
+    }
+    private fun allowNotifications() {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        // Bildirim kanalı oluştur
+        val channelId = "channel_id"
+        val channelName = "Channel Name"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(channelId, channelName, importance)
+        notificationManager.createNotificationChannel(channel)
+
+        // Bildirim oluştur
+        val notificationId = 1
+        val builder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.baseline_notifications_24)
+            .setContentTitle("VKİ Hesaplama")
+            .setContentText("Hey! Günlük diyetini takip ediyorsun değil mi?")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+        // Bildirimi gönder
+        with(NotificationManagerCompat.from(this)) {
+            notify(notificationId, builder.build())
+        }
+
+        // AlarmManager kullanarak bildirim gönderimini planla (24 saatte bir)
+        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        val alarmIntent = Intent(this, AlarmReceiver::class.java)
+        val pendingIntent = PendingIntent.getBroadcast(this, 0, alarmIntent, PendingIntent.FLAG_MUTABLE)
+
+        val intervalMillis = 24 * 60 * 60 * 1000L // 24 saat
+        val triggerTime = System.currentTimeMillis() + intervalMillis
+
+        alarmManager.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            triggerTime,
+            intervalMillis,
+            pendingIntent
+        )
+
     }
     private fun rateUs() {
         val uri = Uri.parse("market://details?id=$packageName")
@@ -247,6 +320,7 @@ class MainActivity : ComponentActivity() {
                 Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
         }
     }
+
     companion object {
         private const val PERMISSION_REQUEST_CODE = 1001
     }
@@ -256,11 +330,32 @@ class MainActivity : ComponentActivity() {
 fun RateUsDialog(onRateUs: () -> Unit, onClose: () -> Unit) {
     AlertDialog(
         onDismissRequest = onClose,
-        title = { Text(text = "Rate Us") },
-        text = { Text("Please rate us on Google Play! ❤\uFE0F") },
+        title = { Text(text = "Bize Oy Ver!⭐") },
+        text = { Text("Google Play'de bizi değerlendirin! ❤\uFE0F") },
         confirmButton = {
             TextButton(onClick = onRateUs) {
                 Text("Rate Us")
+            }
+        },
+        dismissButton = {
+            TextButton(onClick = onClose) {
+                Text("Close")
+            }
+        }
+    )
+}
+@Composable
+fun NotificationPermissionDialog(
+    onPermissionGranted: () -> Unit,
+    onClose: () -> Unit
+) {
+    AlertDialog(
+        onDismissRequest = onClose,
+        title = { Text(text = "Bildirim İzinleri\uD83D\uDD14") },
+        text = { Text("Diyetini takip etmen çok önemli!❤\uFE0F Bildirimlerini her zaman açık tut.") },
+        confirmButton = {
+            TextButton(onClick = onPermissionGranted) {
+                Text("Allow")
             }
         },
         dismissButton = {

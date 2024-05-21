@@ -72,5 +72,4 @@ dependencies {
     implementation libs.androidx.activity.compose
     implementation "androidx.core:core-splashscreen:1.0.1"
     implementation("com.google.accompanist:accompanist-permissions:0.33.1-alpha")
-    implementation 'com.google.android.gms:play-services-ads:23.1.0'
 }
